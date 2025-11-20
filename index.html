@@ -1,0 +1,1372 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>임상훈 | IT 엔지니어 포트폴리오</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="IT 엔지니어 임상훈의 포트폴리오 및 소개 페이지입니다." />
+  <style>
+    /* ------------------------------
+       Design System (Light / Dark)
+       ------------------------------ */
+    :root {
+      /* 색상 토큰 - 라이트 모드 기본값 */
+      --color-bg: #e5e7eb;
+      --color-surface: rgba(255, 255, 255, 0.92);
+      --color-surface-alt: rgba(248, 250, 252, 0.9);
+      --color-border-subtle: rgba(148, 163, 184, 0.5);
+      --color-border-strong: rgba(148, 163, 184, 0.9);
+      --color-text: #0f172a;
+      --color-text-soft: #4b5563;
+      --color-accent: #2563eb;
+      --color-accent-soft: rgba(37, 99, 235, 0.12);
+      --color-accent-strong: #1d4ed8;
+      --color-chip-bg: rgba(15, 23, 42, 0.03);
+      --color-chip-border: rgba(148, 163, 184, 0.7);
+      --color-muted: #9ca3af;
+      --gradient-bg: radial-gradient(circle at top, #e5e7eb 0, #cbd5f5 30%, #e5e7eb 60%, #d1d5db 100%);
+      --shadow-soft: 0 16px 45px rgba(15, 23, 42, 0.2);
+      --shadow-strong: 0 26px 80px rgba(15, 23, 42, 0.55);
+
+      /* 공간 / 레이아웃 토큰 */
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --radius-pill: 999px;
+      --spacing-page: 24px;
+      --spacing-page-mobile: 16px;
+
+      /* 애니메이션 */
+      --transition-fast: 150ms ease-out;
+      --transition-normal: 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      --transition-slow: 360ms cubic-bezier(0.19, 0.68, 0.32, 1);
+
+      /* 타이포 */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    /* 다크 모드 토큰 override */
+    [data-theme="dark"] {
+      --color-bg: #020617;
+      --color-surface: rgba(15, 23, 42, 0.96);
+      --color-surface-alt: rgba(15, 23, 42, 0.9);
+      --color-border-subtle: rgba(51, 65, 85, 0.9);
+      --color-border-strong: rgba(148, 163, 184, 0.8);
+      --color-text: #e5e7eb;
+      --color-text-soft: #9ca3af;
+      --color-accent: #38bdf8;
+      --color-accent-soft: rgba(56, 189, 248, 0.14);
+      --color-accent-strong: #0ea5e9;
+      --color-chip-bg: rgba(15, 23, 42, 0.9);
+      --color-chip-border: rgba(148, 163, 184, 0.8);
+      --color-muted: #6b7280;
+      --gradient-bg: radial-gradient(circle at top, #1f2937 0, #020617 55%, #020617 100%);
+      --shadow-soft: 0 18px 50px rgba(15, 23, 42, 0.8);
+      --shadow-strong: 0 32px 90px rgba(15, 23, 42, 0.95);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: var(--spacing-page);
+      background: var(--gradient-bg);
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      scroll-behavior: smooth;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: var(--spacing-page-mobile);
+      }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.02)
+      );
+      box-shadow: var(--shadow-strong);
+      border: 1px solid var(--color-border-subtle);
+      backdrop-filter: blur(26px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    [data-theme="dark"] .page {
+      background: linear-gradient(
+        145deg,
+        rgba(15, 23, 42, 0.92),
+        rgba(15, 23, 42, 0.96)
+      );
+    }
+
+    /* 장식용 라인 */
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 10% 0, rgba(96, 165, 250, 0.16), transparent 55%),
+        radial-gradient(circle at 90% 0, rgba(56, 189, 248, 0.18), transparent 50%);
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* 헤더 */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 28px 10px;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 18px 18px 4px;
+        gap: 12px;
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--color-text-soft);
+    }
+
+    .logo-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      background: conic-gradient(from 140deg, var(--color-accent) 0, var(--color-accent-strong) 40%, #22c55e 65%, #a855f7 85%, var(--color-accent) 100%);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 8px 18px rgba(15, 23, 42, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 7px;
+      background: radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.9), transparent 55%),
+        radial-gradient(circle at 70% 90%, rgba(15, 23, 42, 0.9), transparent 55%);
+      mix-blend-mode: screen;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        display: none;
+      }
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--color-text-soft);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: var(--color-text);
+      background-color: var(--color-chip-bg);
+      border-color: var(--color-chip-border);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+    }
+
+    .nav a:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.16);
+    }
+
+    /* 테마 토글 버튼 */
+    .theme-toggle {
+      border-radius: 999px;
+      border: 1px solid var(--color-border-subtle);
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.4), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.12), transparent 55%);
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--color-text-soft);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
+      position: relative;
+      overflow: hidden;
+      outline: none;
+      transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-slow);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.32);
+      border-color: var(--color-accent-soft);
+    }
+
+    .theme-toggle:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+    }
+
+    .theme-toggle-label {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .theme-toggle-icon {
+      width: 30px;
+      height: 16px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.6));
+      position: relative;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-toggle-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f9fafb, #e5e7eb);
+      box-shadow: 0 4px 8px rgba(15, 23, 42, 0.5);
+      transition: transform var(--transition-normal), background var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    [data-theme="dark"] .theme-toggle-thumb {
+      transform: translateX(12px);
+      background: radial-gradient(circle at 30% 30%, #e5e7eb, #9ca3af);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.9);
+    }
+
+    .theme-toggle-sun,
+    .theme-toggle-moon {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      position: relative;
+      opacity: 0.8;
+    }
+
+    .theme-toggle-sun {
+      margin-right: auto;
+      background: radial-gradient(circle at 30% 30%, #fde68a, #f97316);
+    }
+
+    .theme-toggle-moon {
+      margin-left: auto;
+      background: radial-gradient(circle at 30% 30%, #e5e7eb, #94a3b8);
+      box-shadow: inset 3px -3px 0 rgba(15, 23, 42, 0.85);
+    }
+
+    /* 히어로 섹션 */
+    .hero {
+      padding: 24px 28px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 32px;
+      align-items: stretch;
+      animation: fadeInUp 0.7s var(--transition-normal) 0.05s both;
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 18px 18px 26px;
+        gap: 22px;
+      }
+    }
+
+    .hero-main {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.9), transparent 55%),
+        var(--color-accent-soft);
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      font-size: 11px;
+      color: var(--color-text-soft);
+      width: fit-content;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e, #16a34a);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.4);
+    }
+
+    .hero-heading {
+      font-size: clamp(28px, 3vw, 34px);
+      line-height: 1.22;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .hero-heading span {
+      color: var(--color-accent-strong);
+    }
+
+    .hero-subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--color-text-soft);
+      max-width: 36rem;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .btn-primary {
+      position: relative;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.7), transparent 60%),
+        linear-gradient(135deg, var(--color-accent-strong), var(--color-accent));
+      color: #f9fafb;
+      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.5);
+      overflow: hidden;
+      outline: none;
+      transform-origin: center;
+      transition: transform var(--transition-fast), box-shadow var(--transition-normal), filter var(--transition-normal);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      filter: brightness(1.04);
+      box-shadow: 0 18px 40px rgba(37, 99, 235, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(0.99);
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.7);
+    }
+
+    .btn-outline {
+      position: relative;
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--color-border-subtle);
+      background: linear-gradient(135deg, var(--color-surface), var(--color-surface-alt));
+      color: var(--color-text-soft);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+      transition: transform var(--transition-fast), box-shadow var(--transition-normal), border-color var(--transition-normal), background var(--transition-slow), color var(--transition-fast);
+    }
+
+    .btn-outline::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: 1.5px solid var(--color-accent);
+      border-top-color: transparent;
+      border-left-color: transparent;
+      transform: rotate(-45deg) translateY(1px);
+    }
+
+    .btn-outline:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.2);
+      border-color: var(--color-accent-soft);
+      color: var(--color-text);
+    }
+
+    .btn-outline:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.23);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--color-muted);
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--color-chip-bg);
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+    }
+
+    .hero-meta-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(145deg, var(--color-accent-strong), var(--color-accent));
+    }
+
+    /* 오른쪽 히어로 카드 */
+    .hero-aside {
+      position: relative;
+    }
+
+    .hero-panel {
+      position: relative;
+      height: 100%;
+      border-radius: 22px;
+      border: 1px solid var(--color-border-strong);
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.25), transparent 60%),
+        linear-gradient(150deg, var(--color-surface), var(--color-surface-alt));
+      box-shadow: var(--shadow-soft);
+      padding: 16px 18px 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transform-origin: center;
+      animation: floatCard 7s ease-in-out infinite;
+    }
+
+    [data-theme="dark"] .hero-panel {
+      background: radial-gradient(circle at 0 0, rgba(148, 163, 184, 0.25), transparent 60%),
+        linear-gradient(150deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+    }
+
+    .hero-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--color-muted);
+    }
+
+    .hero-panel-title {
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .hero-panel-dots {
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .hero-panel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.5);
+    }
+
+    .hero-panel-dot:nth-child(1) {
+      background: #f97316;
+    }
+
+    .hero-panel-dot:nth-child(2) {
+      background: #facc15;
+    }
+
+    .hero-panel-dot:nth-child(3) {
+      background: #22c55e;
+    }
+
+    .hero-panel-body {
+      margin-top: 4px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .hero-summary {
+      font-size: 12px;
+      color: var(--color-text-soft);
+      line-height: 1.6;
+    }
+
+    .hero-summary strong {
+      color: var(--color-text);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--color-chip-border);
+      background-color: var(--color-chip-bg);
+      color: var(--color-text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(6px);
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--color-accent-strong), var(--color-accent));
+    }
+
+    .hero-stack {
+      font-size: 10px;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+
+    .hero-stack-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .hero-stack-item {
+      padding: 7px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--color-border-subtle);
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08));
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    [data-theme="dark"] .hero-stack-item {
+      background: linear-gradient(120deg, rgba(30, 64, 175, 0.4), rgba(15, 23, 42, 0.9));
+    }
+
+    .hero-stack-label {
+      color: var(--color-text-soft);
+    }
+
+    .hero-stack-value {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .hero-footnote {
+      margin-top: auto;
+      font-size: 10px;
+      color: var(--color-muted);
+      border-top: 1px dashed rgba(148, 163, 184, 0.6);
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hero-footnote span:nth-child(2) {
+      color: var(--color-accent-strong);
+      font-weight: 500;
+    }
+
+    /* 공통 섹션 스타일 */
+    .section {
+      padding: 18px 28px 24px;
+      border-top: 1px solid var(--color-border-subtle);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 2.4fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    @media (max-width: 960px) {
+      .section {
+        padding: 16px 18px 22px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+      }
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--color-muted);
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 16px;
+      margin-top: 6px;
+      color: var(--color-text);
+    }
+
+    .section-body {
+      font-size: 14px;
+      color: var(--color-text-soft);
+      line-height: 1.7;
+    }
+
+    .section-body p + p {
+      margin-top: 10px;
+    }
+
+    /* About 섹션 상세 */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 22px;
+    }
+
+    @media (max-width: 960px) {
+      .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+      }
+    }
+
+    .about-main {
+      background: linear-gradient(135deg, var(--color-surface), var(--color-surface-alt));
+      border-radius: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.15);
+    }
+
+    .about-main p {
+      font-size: 13px;
+    }
+
+    .about-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--color-muted);
+    }
+
+    .about-meta-item {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--color-chip-bg);
+      border: 1px solid var(--color-chip-border);
+    }
+
+    .about-list {
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .about-list-item {
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px dashed var(--color-border-subtle);
+      background-color: rgba(15, 23, 42, 0.01);
+    }
+
+    .about-list-item strong {
+      color: var(--color-text);
+    }
+
+    /* Skills 섹션 */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 960px) {
+      .skills-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .skills-card {
+      border-radius: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--color-border-subtle);
+      background: linear-gradient(135deg, var(--color-surface), var(--color-surface-alt));
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16);
+    }
+
+    [data-theme="dark"] .skills-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.95));
+    }
+
+    .skills-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 10px;
+    }
+
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skills-tags .chip {
+      font-size: 12px;
+    }
+
+    .skills-list {
+      margin-top: 10px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skills-list li {
+      list-style: none;
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .skills-list li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--color-accent);
+      position: absolute;
+      left: 0;
+      top: 7px;
+    }
+
+    /* Contact 섹션 */
+    .contact-card {
+      border-radius: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--color-border-subtle);
+      background: linear-gradient(135deg, var(--color-surface), var(--color-surface-alt));
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    [data-theme="dark"] .contact-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+    }
+
+    .contact-lead {
+      font-size: 13px;
+      color: var(--color-text-soft);
+    }
+
+    .contact-list {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+    }
+
+    .contact-row dt {
+      font-weight: 500;
+      color: var(--color-muted);
+    }
+
+    .contact-row dd {
+      margin: 0;
+    }
+
+    .contact-row a {
+      color: var(--color-accent-strong);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color var(--transition-fast), border-color var(--transition-fast);
+      word-break: break-all;
+    }
+
+    .contact-row a:hover {
+      color: var(--color-accent);
+      border-color: rgba(37, 99, 235, 0.4);
+    }
+
+    .contact-note {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--color-muted);
+    }
+
+    /* 푸터 */
+    .footer {
+      padding: 14px 28px 18px;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 11px;
+      color: var(--color-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 960px) {
+      .footer {
+        padding: 10px 18px 14px;
+        flex-direction: column;
+      }
+    }
+
+    .footer span {
+      white-space: nowrap;
+    }
+
+    .footer a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .footer a:hover {
+      border-color: var(--color-muted);
+      color: var(--color-text-soft);
+    }
+
+    /* Reveal 애니메이션 (스크롤 진입 시) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 520ms ease-out, transform 520ms ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 키프레임 */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes floatCard {
+      0%,
+      100% {
+        transform: translateY(0) translateZ(0);
+      }
+      50% {
+        transform: translateY(-6px) translateZ(0);
+      }
+    }
+
+    /* 버튼 클릭 시 리플 효과 */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      pointer-events: none;
+      animation: ripple 450ms ease-out;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+      opacity: 0.8;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(10);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <div>
+          <div>Im Sanghun</div>
+          <div style="font-size:10px; color:var(--color-muted); letter-spacing:0.12em;">IT Engineer</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#about">소개</a>
+        <a href="#skills">기술 스택</a>
+        <a href="#contact">연락처</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="다크 모드 토글">
+        <span class="theme-toggle-label">Theme</span>
+        <span class="theme-toggle-icon">
+          <span class="theme-toggle-sun"></span>
+          <span class="theme-toggle-moon"></span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero" id="top">
+        <div class="hero-main">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span>임상훈 · IT 엔지니어</span>
+          </div>
+          <h1 class="hero-heading">
+            안정적인 <span>시스템과 서비스</span>를 설계하고,
+            비즈니스에 맞는 기술을 선택하는 IT 엔지니어입니다.
+          </h1>
+          <p class="hero-subtitle">
+            인프라와 애플리케이션 사이의 경계를 이해하고, 다양한 환경에서 요구되는
+            가용성과 보안, 성능을 균형 있게 고려하는 것을 중요하게 생각합니다.
+            문제를 빠르게 파악하고, 재발하지 않도록 구조적으로 개선하는 데 집중합니다.
+          </p>
+
+          <div class="hero-cta-row">
+            <button class="btn-primary" id="aboutButton" type="button">
+              프로필 자세히 보기
+            </button>
+            <button class="btn-outline" id="contactButton" type="button">
+              함께 일하는 방법
+            </button>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <span class="hero-meta-dot"></span>
+              <span>인프라 · 네트워크 · 클라우드</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-dot"></span>
+              <span>자동화와 운영 효율 개선</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-dot"></span>
+              <span>문제 해결과 장애 예방 중심 사고</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-aside">
+          <div class="hero-panel">
+            <div class="hero-panel-header">
+              <div class="hero-panel-title">Profile Snapshot</div>
+              <div class="hero-panel-dots">
+                <span class="hero-panel-dot"></span>
+                <span class="hero-panel-dot"></span>
+                <span class="hero-panel-dot"></span>
+              </div>
+            </div>
+            <div class="hero-panel-body">
+              <div>
+                <p class="hero-summary">
+                  <strong>IT 엔지니어</strong>로서 인프라, 네트워크, 클라우드 환경을 기반으로
+                  서비스 전체 흐름을 이해하고, 비즈니스 요구사항을 기술 구조에 반영하는 역할을 담당해 왔습니다.
+                  새로운 기술 도입보다 <strong>안정적인 운영과 재현 가능한 개선</strong>을 더 중요하게 생각합니다.
+                </p>
+                <div class="hero-tags">
+                  <span class="chip">
+                    <span class="chip-dot"></span>
+                    시스템 설계
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span>
+                    모니터링 · 가시성
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span>
+                    DevOps 관점
+                  </span>
+                </div>
+              </div>
+              <div>
+                <div class="hero-stack">Selected Focus</div>
+                <div class="hero-stack-grid">
+                  <div class="hero-stack-item">
+                    <span class="hero-stack-label">Infrastructure</span>
+                    <span class="hero-stack-value">Linux, Network, Cloud</span>
+                  </div>
+                  <div class="hero-stack-item">
+                    <span class="hero-stack-label">Automation</span>
+                    <span class="hero-stack-value">CI/CD, Script, IaC</span>
+                  </div>
+                  <div class="hero-stack-item">
+                    <span class="hero-stack-label">Reliability</span>
+                    <span class="hero-stack-value">Monitoring, Logging</span>
+                  </div>
+                  <div class="hero-stack-item">
+                    <span class="hero-stack-label">Collaboration</span>
+                    <span class="hero-stack-value">문서화, 커뮤니케이션</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hero-footnote">
+              <span>장애 없는 일상적인 운영을 만드는 일에 관심이 많습니다.</span>
+              <span>실행 가능한 계획과 책임 있는 마무리를 지향합니다.</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- About -->
+      <section class="section reveal" id="about">
+        <div>
+          <div class="section-label">About</div>
+          <h2 class="section-title">임상훈 · IT 엔지니어</h2>
+        </div>
+        <div class="section-body">
+          <div class="about-grid">
+            <div class="about-main">
+              <p>
+                저는 기술을 목적이 아닌 <strong>비즈니스를 지탱하는 수단</strong>으로 바라보는
+                IT 엔지니어입니다. 인프라와 애플리케이션, 운영과 개발 사이의 간극을 줄이고,
+                조직이 안정적으로 성장할 수 있도록 시스템을 정리하고 구조화하는 데 강점이 있습니다.
+              </p>
+              <p>
+                특정 도구나 벤더에 얽매이기보다, <strong>문제를 정확히 정의</strong>하고
+                현재 상황에서 가장 현실적인 선택을 찾는 것에 집중합니다.
+                복잡한 이슈를 단순한 언어로 풀어 설명하고, 이해관계자와 함께 방향을 맞춰 가는 과정을 좋아합니다.
+              </p>
+              <div class="about-meta">
+                <span class="about-meta-item">관찰과 정리 중심의 문제 해결</span>
+                <span class="about-meta-item">실행 가능한 로드맵 설계</span>
+                <span class="about-meta-item">운영과 개발 사이의 연결자 역할</span>
+              </div>
+            </div>
+            <div class="about-list">
+              <div class="about-list-item">
+                <strong>일하는 방식</strong><br />
+                재현 가능한 절차와 기준을 만드는 것을 중요하게 생각합니다.
+                개인의 숙련도에 의존하기보다, 누구나 따라 할 수 있는 운영 구조를 지향합니다.
+              </div>
+              <div class="about-list-item">
+                <strong>관심사</strong><br />
+                시스템 구조와 네트워크를 이해하는 것, 로그와 메트릭을 통해
+                서비스의 상태를 읽어내는 것, 장애를 계기로 더 나은 구조를 설계하는 일에 관심이 많습니다.
+              </div>
+              <div class="about-list-item">
+                <strong>협업</strong><br />
+                개발자, 기획자, 비즈니스 담당자와 같은 언어로 이야기하기 위해
+                문서와 다이어그램, 예제를 활용해 소통합니다. 합의된 기준을 운영에 반영하는 일을 즐깁니다.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section reveal" id="skills">
+        <div>
+          <div class="section-label">Skills</div>
+          <h2 class="section-title">기술 스택과 관심 영역</h2>
+        </div>
+        <div class="section-body">
+          <div class="skills-grid">
+            <div class="skills-card">
+              <div class="skills-title">Core Stack</div>
+              <div class="skills-tags">
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  Linux / Unix
+                </span>
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  TCP/IP · Routing
+                </span>
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  Virtualization · Cloud
+                </span>
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  Shell · Python · Script
+                </span>
+              </div>
+              <ul class="skills-list">
+                <li>서비스 특성에 맞는 인프라 구조와 네트워크 구성을 설계하고 운영합니다.</li>
+                <li>OS, 네트워크, 애플리케이션 레벨에서 발생하는 이슈를 단계적으로 진단합니다.</li>
+                <li>반복적인 운영 작업을 스크립트와 도구로 자동화하는 것을 선호합니다.</li>
+              </ul>
+            </div>
+            <div class="skills-card">
+              <div class="skills-title">Operations & Collaboration</div>
+              <div class="skills-tags">
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  Monitoring
+                </span>
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  Logging
+                </span>
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  Incident Response
+                </span>
+                <span class="chip">
+                  <span class="chip-dot"></span>
+                  Documentation
+                </span>
+              </div>
+              <ul class="skills-list">
+                <li>모니터링과 로그를 통해 서비스의 정상 상태를 정의하고, 이상 징후를 빠르게 감지합니다.</li>
+                <li>장애 상황을 기록하고, 재발 방지를 위한 액션 아이템을 정리하여 공유합니다.</li>
+                <li>시스템 구조와 운영 기준을 문서로 남겨 팀 전체가 같은 기준으로 일할 수 있도록 돕습니다.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="section reveal" id="contact">
+        <div>
+          <div class="section-label">Contact</div>
+          <h2 class="section-title">함께 일하고 싶으시다면</h2>
+        </div>
+        <div class="section-body">
+          <div class="contact-card">
+            <p class="contact-lead">
+              새로운 환경에서 인프라와 운영, 그리고 비즈니스를 연결하는 역할에 관심이 있습니다.
+              아래 연락처로 편하게 메시지를 남겨 주시면, 최대한 빠르게 답변드리겠습니다.
+            </p>
+
+            <dl class="contact-list">
+              <div class="contact-row">
+                <dt>이메일</dt>
+                <dd>
+                  <!-- 여기를 본인 이메일로 변경 -->
+                  <a href="mailto:contact@example.com">contact@example.com</a>
+                </dd>
+              </div>
+              <div class="contact-row">
+                <dt>GitHub</dt>
+                <dd>
+                  <!-- 여기를 본인 GitHub 주소로 변경 -->
+                  <a href="https://github.com/your-github" target="_blank" rel="noopener">
+                    github.com/your-github
+                  </a>
+                </dd>
+              </div>
+            </dl>
+
+            <p class="contact-note">
+              구체적인 공고가 없어도 괜찮습니다. 조직이 겪고 있는 기술·운영적인 고민들을 함께 정리하고,
+              현실적인 방향을 찾는 대화도 환영합니다.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <span>© <span id="year"></span> Im Sanghun. All rights reserved.</span>
+      </div>
+      <div>
+        <span>Built for GitHub Pages · HTML, CSS, JavaScript</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var THEME_KEY = "portfolio-theme";
+
+      function getStoredTheme() {
+        try {
+          return localStorage.getItem(THEME_KEY);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function storeTheme(theme) {
+        try {
+          localStorage.setItem(THEME_KEY, theme);
+        } catch (e) {
+          /* ignore */
+        }
+      }
+
+      function detectSystemTheme() {
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+      }
+
+      // 초기 테마 설정
+      var initialTheme = getStoredTheme() || detectSystemTheme();
+      applyTheme(initialTheme);
+
+      var themeToggle = document.getElementById("themeToggle");
+      if (themeToggle) {
+        themeToggle.addEventListener("click", function (event) {
+          var current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+          var next = current === "dark" ? "light" : "dark";
+          applyTheme(next);
+          storeTheme(next);
+          createRipple(event, themeToggle);
+        });
+      }
+
+      // Hero 버튼 스크롤 및 클릭 애니메이션
+      function smoothScrollTo(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      var aboutButton = document.getElementById("aboutButton");
+      if (aboutButton) {
+        aboutButton.addEventListener("click", function (event) {
+          createRipple(event, aboutButton);
+          smoothScrollTo("about");
+        });
+      }
+
+      var contactButton = document.getElementById("contactButton");
+      if (contactButton) {
+        contactButton.addEventListener("click", function (event) {
+          createRipple(event, contactButton);
+          smoothScrollTo("contact");
+        });
+      }
+
+      // 리플 이펙트 (마우스 클릭 이벤트)
+      function createRipple(event, element) {
+        var rect = element.getBoundingClientRect();
+        var ripple = document.createElement("span");
+        ripple.className = "ripple";
+        var size = Math.max(rect.width, rect.height);
+        var x = event.clientX - rect.left - size / 2;
+        var y = event.clientY - rect.top - size / 2;
+        ripple.style.width = ripple.style.height = size + "px";
+        ripple.style.left = x + "px";
+        ripple.style.top = y + "px";
+        element.appendChild(ripple);
+        setTimeout(function () {
+          ripple.remove();
+        }, 450);
+      }
+
+      // Reveal 애니메이션 (IntersectionObserver)
+      var revealEls = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && revealEls.length) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        revealEls.forEach(function (el) {
+          observer.observe(el);
+        });
+      } else {
+        // Fallback
+        revealEls.forEach(function (el) {
+          el.classList.add("visible");
+        });
+      }
+
+      // Footer 연도 설정
+      var yearSpan = document.getElementById("year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+</body>
+</html>
+
